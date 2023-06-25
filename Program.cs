@@ -6,9 +6,18 @@ namespace ConsoleApp
     {
         static void Main(string[] args)
         {
-            Console.Write("What is your name? ");
-            string? name = Console.ReadLine();
-            Console.WriteLine($"Hello {name}");
+            // ------ CONSOLE METHODS -----
+            // Change the text color in the console
+            Console.ForegroundColor = ConsoleColor.Black;
+
+            // Change background color
+            Console.BackgroundColor = ConsoleColor.White;
+
+            // Set background for whole console
+            Console.Clear();
+
+            // Prints Hello World on the console
+            Console.WriteLine("Hello World!");
         }
     }
 }
