@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 namespace ConsoleApp
 {
@@ -6,31 +7,20 @@ namespace ConsoleApp
     {
         static void Main(string[] args)
         {
-            // ---------- DATA TYPE CONVERSION ----------
+            CultureInfo.CurrentCulture = new CultureInfo("en-US");
+            // ---------- FORMATTING OUTPUT ----------
 
-            // You can convert from string to other types with Parse
-            bool boolFromStr = bool.Parse("True");
-            int intFromStr = int.Parse("100");
-            double dblFromStr = double.Parse("1.234");
-            Console.WriteLine($"{boolFromStr}: {boolFromStr.GetType()}");
-            Console.WriteLine($"{intFromStr}: {intFromStr.GetType()}");
-            Console.WriteLine($"{dblFromStr}: {dblFromStr.GetType()}");
+            // Format output for currency
+            Console.WriteLine("Currency : {0:c}", 23.455);
 
-            // Convert double into a string
-            string strVal = dblFromStr.ToString();
+            // Pad with zeroes
+            Console.WriteLine("Pad with 0s : {0:d4}", 23);
 
-            // Get the new data type
-            Console.WriteLine($"Data type : {strVal.GetType()}");
+            // Define decimals
+            Console.WriteLine("3 Decimals : {0:f3}", 23.4555);
 
-            // Cast double into integer (Explicit Conversion)
-            // Put the data type to convert into between ()
-            double dblNum = 12.345;
-            Console.WriteLine($"Integer : {(int)dblNum}");
-
-            // Cast integer into long (Implicit Conversion)
-            // smaller size type to a larger size
-            int intNum = 10;
-            long longNum = intNum;
+            // Add commas and decimals
+            Console.WriteLine("Commas : {0:n4}", 2300);
         }
     }
 }
