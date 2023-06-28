@@ -14,35 +14,42 @@ namespace ConsoleApp
             }
         }
 
+        static double DoDivision(double x, double y)
+        {
+            if (y == 0)
+            {
+                throw new System.DivideByZeroException();
+            }
+            return x / y;
+        }
+
 
         // -------- END OF FUNCTIONS --------
         static void Main(string[] args)
         {
-            int i = 1;
-            while (i <= 10)
+            double num1 = 5;
+            double num2 = 0;
+
+            try
             {
-                if (i % 2 == 0)
-                {
-                    i++;
-                    continue;
-                }
-                if (i == 9) break;
-                Console.WriteLine(i);
-                i++;
+                Console.WriteLine("5 / 0 = {0}", DoDivision(num1, num2));
             }
-
-            Random rnd = new Random();
-            int secretNumber = rnd.Next(1, 11);
-            int numberGuessed = 0;
-            Console.WriteLine("Random Num : {0}", secretNumber);
-
-            do
+            catch (DivideByZeroException ex)
             {
-                Console.WriteLine("Enter a number between 1 & 10 :");
-                numberGuessed = Convert.ToInt32(Console.ReadLine());
-            } while (secretNumber != numberGuessed);
-
-            Console.WriteLine("You guessed it! It was {0}", secretNumber);
+                Console.WriteLine("You can't divide by zero");
+                Console.WriteLine(ex.GetType().Name);
+                Console.WriteLine(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("An error occurred");
+                Console.WriteLine(ex.GetType());
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                Console.WriteLine("Cleaning Up");
+            }
 
         }
     }
