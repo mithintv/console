@@ -75,52 +75,27 @@ namespace ConsoleApp
         // -------- END OF FUNCTIONS --------
         static void Main(string[] args)
         {
-            // SayHello();
+            // ---------- DATETIME & TIMESPAN ----------
+
+            // Used to define dates
+            DateTime awesomeDate = new DateTime(1974, 12, 21);
+            Console.WriteLine("Day of the Week: {0}", awesomeDate.DayOfWeek);
+
+            // You can change values
+            awesomeDate = awesomeDate.AddDays(4);
+            awesomeDate = awesomeDate.AddMonths(1);
+            awesomeDate = awesomeDate.AddYears(1);
+            Console.WriteLine("New Date : {0}", awesomeDate.Date);
 
 
-            // ----- PASSING BY VALUE -----
-            // By default values are passed into a method and not a reference to the variable passed
-            // Changes made to those values do not effect the variables outside of the method
-            double x = 5;
-            double y = 4;
+            // TimeSpan
+            // Used to define a time
+            TimeSpan lunchTime = new TimeSpan(12, 30, 0);
 
-            Console.WriteLine("5 + 4 = {0}", GetSum(x, y));
-
-            // Even though the value for x changed in method it remains unchanged here
-            Console.WriteLine("x = {0}", x);
-
-
-            // ----- OUT PARAMETER -----
-            // You can pass a variable as an output variable even without assigning a value to it
-
-            int solution;
-
-            // A parameter passed with out has its value assigned in the method
-            DoubleIt(15, out solution);
-            Console.WriteLine("15 * 2 = {0}", solution);
-
-
-            // ----- PASS BY REFERENCE -----
-            int num3 = 10;
-            int num4 = 20;
-            Console.WriteLine("Before Swap num1: {0} num2: {1}", num3, num4);
-            Swap(ref num3, ref num4);
-            Console.WriteLine("After Swap num1: {0} num2: {1}", num3, num4);
-
-            // ----- PARAMS -----
-            // You are able to pass a variable amount of data of the same data type into a  method using params. You can also pass in an array.
-            Console.WriteLine("1 + 2 + 3 = {0}", GetSumMore(1, 2, 3));
-
-
-            // ----- NAMED PARAMETERS -----
-            // You can pass values in any order if you used named parameters
-            PrintInfo(zipCode: 15147, name: "Derek Banas");
-
-
-            // ----- METHOD OVERLOADING -----
-            // You can define methods with the same name that will be called depending on what data is sent automatically
-            Console.WriteLine("5.0 + 4.0 = {0}", GetSum2(5.0, 4.5));
-            Console.WriteLine("5.0 + 4.0 = {0}", GetSum2("5.0", "4.5"));
+            // Change values
+            lunchTime = lunchTime.Subtract(new TimeSpan(0, 15, 0));
+            lunchTime = lunchTime.Add(new TimeSpan(1, 0, 0));
+            Console.WriteLine("New Time : {0}", lunchTime.ToString());
         }
     }
 }
