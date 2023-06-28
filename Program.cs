@@ -6,77 +6,121 @@ namespace ConsoleApp
 {
     public class Program
     {
-        // -------- FUNCTIONS --------
+        // ---------- FUNCTIONS / METHODS ----------
+        // Functions are used to avoid code duplication, provides organization and allows use to simulate different systems
+        // <Access Specifier> <Return Type> <Method Name>(Parameters)
+        // { <Body> }
 
-        static void PrintArray(int[] intArray, string mess)
+        // Access Specifier determines whether the function can be called from another class
+        // public : Can be accessed from another class
+        // private : Can't be accessed from another class
+        // protected : Can't be accessed by another class but can by derived classes
+
+        private static void SayHello()
         {
-            foreach (int k in intArray)
-            {
-                Console.WriteLine("{0} : {1}", mess, k);
-            }
+            string name = "";
+            Console.Write("What is your name : ");
+            name = Console.ReadLine();
+            Console.WriteLine("Hello {0}", name);
         }
 
-        static double DoDivision(double x, double y)
+        static double GetSum(double x = 1, double y = 1)
         {
-            if (y == 0)
+            double temp = x;
+            x = y;
+            y = temp;
+            return x + y;
+        }
+
+        static void DoubleIt(int x, out int solution)
+        {
+            solution = x * 2;
+        }
+
+        static void Swap(ref int num3, ref int num4)
+        {
+            int temp = num3;
+            num3 = num4;
+            num4 = temp;
+        }
+
+        static double GetSumMore(params double[] nums)
+        {
+            double sum = 0;
+            foreach (int i in nums)
             {
-                throw new System.DivideByZeroException();
+                sum += i;
             }
-            return x / y;
+            return sum;
+        }
+
+        static void PrintInfo(string name, int zipCode)
+        {
+            Console.WriteLine("{0} lives in zip code {1}", name, zipCode);
+        }
+
+        static double GetSum2(double x = 1, double y = 1)
+        {
+            return x + y;
+        }
+
+        static double GetSum2(string x = "1", string y = "1")
+        {
+            double dblX = Convert.ToDouble(x);
+            double dblY = Convert.ToDouble(y);
+            return dblX + dblY;
         }
 
 
         // -------- END OF FUNCTIONS --------
         static void Main(string[] args)
         {
-            // ----- STRINGBUILDER -----
-            // Each time you change a string you are actually creating a new string which is inefficient when you are working with large blocks of text
-            // StringBuilders actually change the text rather then make a copy
+            // SayHello();
 
-            // Create a StringBuilder with a default size
-            // of 16 characters, but it grows automatically
-            StringBuilder sb = new StringBuilder("Random text");
 
-            // Create a StringBuilder with a size of 256
-            StringBuilder sb2 = new StringBuilder("More stuff that is very important", 256);
+            // ----- PASSING BY VALUE -----
+            // By default values are passed into a method and not a reference to the variable passed
+            // Changes made to those values do not effect the variables outside of the method
+            double x = 5;
+            double y = 4;
 
-            // Get max size
-            Console.WriteLine("Capacity : {0}", sb2.Capacity);
+            Console.WriteLine("5 + 4 = {0}", GetSum(x, y));
 
-            // Get length
-            Console.WriteLine("Length : {0}", sb2.Length);
+            // Even though the value for x changed in method it remains unchanged here
+            Console.WriteLine("x = {0}", x);
 
-            // Add text to StringBuilder
-            sb2.AppendLine("\nMore important text");
 
-            // Define culture specific formating
-            CultureInfo enUS = CultureInfo.CreateSpecificCulture("en-US");
+            // ----- OUT PARAMETER -----
+            // You can pass a variable as an output variable even without assigning a value to it
 
-            // Append a format string
-            string bestCust = "Bob Smith";
-            sb2.AppendFormat(enUS, "Best Customer : {0}", bestCust);
+            int solution;
 
-            // Output StringBuilder
-            Console.WriteLine(sb2.ToString());
+            // A parameter passed with out has its value assigned in the method
+            DoubleIt(15, out solution);
+            Console.WriteLine("15 * 2 = {0}", solution);
 
-            // Replace a string
-            sb2.Replace("text", "characters");
-            Console.WriteLine(sb2.ToString());
 
-            // Clear a string builder
-            sb2.Clear();
-            sb2.Append("Random text");
+            // ----- PASS BY REFERENCE -----
+            int num3 = 10;
+            int num4 = 20;
+            Console.WriteLine("Before Swap num1: {0} num2: {1}", num3, num4);
+            Swap(ref num3, ref num4);
+            Console.WriteLine("After Swap num1: {0} num2: {1}", num3, num4);
 
-            // Are objects equal
-            Console.WriteLine(sb.Equals(sb2));
+            // ----- PARAMS -----
+            // You are able to pass a variable amount of data of the same data type into a  method using params. You can also pass in an array.
+            Console.WriteLine("1 + 2 + 3 = {0}", GetSumMore(1, 2, 3));
 
-            // Insert at an index
-            sb2.Insert(11, " that's great");
-            Console.WriteLine("Insert : {0}", sb2.ToString());
 
-            // Remove number of characters starting at index
-            sb2.Remove(11, 7);
-            Console.WriteLine("Remove : {0}", sb2.ToString());
+            // ----- NAMED PARAMETERS -----
+            // You can pass values in any order if you used named parameters
+            PrintInfo(zipCode: 15147, name: "Derek Banas");
+
+
+            // ----- METHOD OVERLOADING -----
+            // You can define methods with the same name that will be called depending on what data is sent automatically
+            Console.WriteLine("5.0 + 4.0 = {0}", GetSum2(5.0, 4.5));
+            Console.WriteLine("5.0 + 4.0 = {0}", GetSum2("5.0", "4.5"));
         }
     }
 }
