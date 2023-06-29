@@ -12,64 +12,36 @@ namespace ConsoleApp
         static void Main(string[] args)
         {
 
-            // Collections can resize unlike arrays
-            // ---------- ARRAYLISTS ----------
+            // ---------- DICTIONARIES ----------
+            #region Dictionary Code
 
-            // #region provides a way to collapse long blocks of code
-            #region ArrayList Code
+            // Dictionaries store key value pairs to create them define the data type for the key and the value
+            Dictionary<string, string> superheroes = new Dictionary<string, string>();
+            superheroes.Add("Clark Kent", "Superman");
+            superheroes.Add("Bruce Wayne", "Batman");
+            superheroes.Add("Barry Allen", "The Flash");
 
-            // ArrayLists are resizable arrays that can hold multiple data types
-            ArrayList aList = new ArrayList();
-            aList.Add("Bob");
-            aList.Add(40);
+            // Remove a key / value
+            superheroes.Remove("Barry Allen");
 
-            // Number of items in list
-            Console.WriteLine("Count : {0}", aList.Count);
+            // Number of keys
+            Console.WriteLine("Count : {0}", superheroes.Count);
 
-            // The capacity automatically increases as items are added
-            Console.WriteLine("Capacity : {0}", aList.Capacity);
+            // Check if a key is present
+            Console.WriteLine("Clark Kent: {0}", superheroes.ContainsKey("Clark Kent"));
 
+            // Get the value for the key and store it in a string
+            superheroes.TryGetValue("Clark Kent", out string? test);
+            Console.WriteLine($"Clark Kent : {test}");
 
-            ArrayList aList2 = new ArrayList();
-            // Add an object array
-            aList2.AddRange(new object[] { "Mike", "Sally", "Egg" });
-            aList.AddRange(aList2);
-
-
-            // You can sort the list if the types are the same
-            aList2.Sort();
-            aList2.Reverse();
-
-            // Insert at the 2nd position
-            aList2.Insert(1, "Turkey");
-
-            // Get the first 2 items
-            ArrayList range = aList2.GetRange(0, 2);
-
-            // Remove the first item
-            aList.Remove(0);
-            // Remove the 1st 2 items
-            aList.RemoveRange(0, 2);
-
-            // Search for a match starting at the provided index. You can also find the last index with LastIndexOf
-            Console.WriteLine("Turkey Index : {0}", aList2.IndexOf("Turkey", 0));
-
-
-            // Cycle through the list
-            foreach (object o in aList)
+            // Cycle through key value pairs
+            foreach (KeyValuePair<string, string> item in superheroes)
             {
-                Console.WriteLine(o);
+                Console.WriteLine("{0} : {1}", item.Key, item.Value);
             }
 
-
-            // Convert an ArrayList into a string array
-            string[] myArray = (string[])aList.ToArray(typeof(string));
-            Console.WriteLine(myArray);
-
-            // Convert a string array into an ArrayList
-            string[] customers = { "Bob", "Sally", "Sue" };
-            ArrayList custArrayList = new ArrayList();
-            custArrayList.AddRange(customers);
+            // Clear a dictionary
+            superheroes.Clear();
 
             #endregion
         }
