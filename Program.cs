@@ -11,37 +11,40 @@ namespace ConsoleApp
 
         static void Main(string[] args)
         {
+            // ---------- QUEUES ----------
+            #region Queue Code
 
-            // ---------- DICTIONARIES ----------
-            #region Dictionary Code
+            // Queue 1st in 1st Out Collection
 
-            // Dictionaries store key value pairs to create them define the data type for the key and the value
-            Dictionary<string, string> superheroes = new Dictionary<string, string>();
-            superheroes.Add("Clark Kent", "Superman");
-            superheroes.Add("Bruce Wayne", "Batman");
-            superheroes.Add("Barry Allen", "The Flash");
+            // Create a Queue
+            Queue queue = new Queue();
 
-            // Remove a key / value
-            superheroes.Remove("Barry Allen");
+            // Add values
+            queue.Enqueue(1);
+            queue.Enqueue(2);
+            queue.Enqueue(3);
 
-            // Number of keys
-            Console.WriteLine("Count : {0}", superheroes.Count);
+            // Is item in queue
+            Console.WriteLine("1 in Queue : {0}", queue.Contains(1));
+            // Remove 1st item from queue
+            Console.WriteLine("Remove : {0}", queue.Dequeue());
+            // Look at 1st item but don't remove
+            Console.WriteLine("Peek : {0}", queue.Peek());
 
-            // Check if a key is present
-            Console.WriteLine("Clark Kent: {0}", superheroes.ContainsKey("Clark Kent"));
+            // Copy queue to array
+            object?[] numArray = queue.ToArray();
 
-            // Get the value for the key and store it in a string
-            superheroes.TryGetValue("Clark Kent", out string? test);
-            Console.WriteLine($"Clark Kent : {test}");
+            // Print array
+            Console.WriteLine(String.Join(",", numArray));
 
-            // Cycle through key value pairs
-            foreach (KeyValuePair<string, string> item in superheroes)
+            // Print queue items
+            foreach (object o in queue)
             {
-                Console.WriteLine("{0} : {1}", item.Key, item.Value);
+                Console.WriteLine($"Queue : {o}");
             }
 
-            // Clear a dictionary
-            superheroes.Clear();
+            // Clear the queue
+            queue.Clear();
 
             #endregion
         }
