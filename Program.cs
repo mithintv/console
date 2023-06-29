@@ -11,40 +11,38 @@ namespace ConsoleApp
 
         static void Main(string[] args)
         {
-            // ---------- QUEUES ----------
+            // ---------- STACKS ----------
             #region Queue Code
+            // Stack Last in 1st Out Collection
 
-            // Queue 1st in 1st Out Collection
+            // Create a stack
+            Stack stack = new Stack();
 
-            // Create a Queue
-            Queue queue = new Queue();
+            // Put items on the stack
+            stack.Push(1);
+            stack.Push(2);
+            stack.Push(3);
 
-            // Add values
-            queue.Enqueue(1);
-            queue.Enqueue(2);
-            queue.Enqueue(3);
+            // Get but don't remove item
+            Console.WriteLine("Peek 1 : {0}", stack.Peek());
 
-            // Is item in queue
-            Console.WriteLine("1 in Queue : {0}", queue.Contains(1));
-            // Remove 1st item from queue
-            Console.WriteLine("Remove : {0}", queue.Dequeue());
-            // Look at 1st item but don't remove
-            Console.WriteLine("Peek : {0}", queue.Peek());
+            // Remove item
+            Console.WriteLine("Remove 1 : {0}", stack.Pop());
 
-            // Copy queue to array
-            object?[] numArray = queue.ToArray();
+            // Does item exist on stack
+            Console.WriteLine("Contain 1 : {0}", stack.Contains(1));
+
+            // Copy stack to array
+            object?[] numArray = stack.ToArray();
 
             // Print array
             Console.WriteLine(String.Join(",", numArray));
 
-            // Print queue items
-            foreach (object o in queue)
+            // Print the stack
+            foreach (object o in numArray)
             {
-                Console.WriteLine($"Queue : {o}");
+                Console.WriteLine($"Stack : {o}");
             }
-
-            // Clear the queue
-            queue.Clear();
 
             #endregion
         }
