@@ -58,13 +58,40 @@ namespace ConsoleApp
             Console.WriteLine(rec1.GetArea());
             Rectangle<string> rec2 = new Rectangle<string>("20", "50");
             Console.WriteLine(rec2.GetArea());
+
+            // Delegates allow you to reference methods inside a delegate object. The delegate object can then be passed to other methods that can call the methods assigned to the delegate. It can also stack methods that are called in the specified order
+
+            // Create delegate objects
+            Arithmetic add, sub, addSub;
+
+
+            // Assign just the Add method
+            add = new Arithmetic(Add);
+
+            // Assign just the Subtract method
+            sub = new Arithmetic(Subtract);
+
+            // Assign Add and Sub
+            addSub = add + sub;
+
+            // Print out results
+            Console.WriteLine($"Add {6} & {10}");
+            add(6, 10);
+
+            // Call both methods
+            Console.WriteLine($"Add & Subtract {10} & {4}");
+            addSub(10, 4);
         }
 
+
+        // You can also create generic structs and classes in this same way
         public struct Rectangle<T>
         {
+            // Generic fields
             private T width;
             private T length;
 
+            // Generic properties
             public T Width
             {
                 get { return width; }
@@ -77,6 +104,7 @@ namespace ConsoleApp
                 set { length = value; }
             }
 
+            // Generic constructor
             public Rectangle(T w, T l)
             {
                 width = w;
@@ -89,6 +117,19 @@ namespace ConsoleApp
                 double dblLength = Convert.ToDouble(Length);
                 return string.Format($"{Width} * {Length} = {dblWidth} * {dblLength}");
             }
+        }
+
+        // Declare a delegate type that performs arithmetic. It defines the return type and the types for attributes
+        public delegate void Arithmetic(double num1, double num2);
+
+        // Methods that will be assigned to the delegate
+        public static void Add(double num1, double num2)
+        {
+            Console.WriteLine($"{num1} + {num2} = {num1 + num2}");
+        }
+        public static void Subtract(double num1, double num2)
+        {
+            Console.WriteLine($"{num1} - {num2} = {num1 - num2}");
         }
     }
 }
