@@ -6,45 +6,89 @@ using System.Collections.Generic;
 
 namespace ConsoleApp
 {
+
+    // We focus on Generic Collections, Generic Methods, Generic Structs, and more on Delegates
     public class Program
     {
 
         static void Main(string[] args)
         {
-            // ---------- STACKS ----------
-            #region Queue Code
-            // Stack Last in 1st Out Collection
 
-            // Create a stack
-            Stack stack = new Stack();
+            // Generic collections are type safe and provide performance benefits
 
-            // Put items on the stack
-            stack.Push(1);
-            stack.Push(2);
-            stack.Push(3);
+            // You define the data type when defining the generic. This is a dynamically resizing collection
+            List<Animal> animalList = new List<Animal>();
 
-            // Get but don't remove item
-            Console.WriteLine("Peek 1 : {0}", stack.Peek());
+            // You can also create a list of standard types like int
+            List<int> numList = new List<int>();
 
-            // Remove item
-            Console.WriteLine("Remove 1 : {0}", stack.Pop());
+            // Add an int
+            numList.Add(24);
 
-            // Does item exist on stack
-            Console.WriteLine("Contain 1 : {0}", stack.Contains(1));
+            // Add Animals
+            animalList.Add(new Animal() { Name = "Doug", });
+            animalList.Add(new Animal() { Name = "Paul", });
+            animalList.Add(new Animal() { Name = "Sally", });
 
-            // Copy stack to array
-            object?[] numArray = stack.ToArray();
+            // Insert in index 1
+            animalList.Insert(1, new Animal() { Name = "Steve", });
+            // Remove index 1
+            animalList.RemoveAt(1);
 
-            // Print array
-            Console.WriteLine(String.Join(",", numArray));
+            // Get number of Animals
+            Console.WriteLine("Num of Animals : {0}", animalList.Count);
 
-            // Print the stack
-            foreach (object o in numArray)
+            // Cycle through Animals
+            foreach (Animal a in animalList)
             {
-                Console.WriteLine($"Stack : {o}");
+                Console.WriteLine(a.Name);
             }
 
-            #endregion
+            // You can also use Stack<T>, Queue<T>, Dictionary<TKey, TValue> like I covered previously
+
+            // Generic methods
+            // You can use the type parameter <int>  if it can be inferred from the parameters  passed (Can't do this if there are no parameters)
+            int x = 5, y = 4;
+            Animal.GetSum<int>(ref x, ref y);
+            string strX = "5", strY = "4";
+            Animal.GetSum<string>(ref strX, ref strY);
+
+            // Use the generic struct
+            Rectangle<int> rec1 = new Rectangle<int>(20, 50);
+            Console.WriteLine(rec1.GetArea());
+            Rectangle<string> rec2 = new Rectangle<string>("20", "50");
+            Console.WriteLine(rec2.GetArea());
+        }
+
+        public struct Rectangle<T>
+        {
+            private T width;
+            private T length;
+
+            public T Width
+            {
+                get { return width; }
+                set { width = value; }
+            }
+
+            public T Length
+            {
+                get { return length; }
+                set { length = value; }
+            }
+
+            public Rectangle(T w, T l)
+            {
+                width = w;
+                length = l;
+            }
+
+            public string GetArea()
+            {
+                double dblWidth = Convert.ToDouble(Width);
+                double dblLength = Convert.ToDouble(Length);
+                return string.Format($"{Width} * {Length} = {dblWidth} * {dblLength}");
+            }
         }
     }
 }
