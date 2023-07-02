@@ -4,69 +4,58 @@ using System.Text;
 using System.Collections;
 using System.Collections.Generic;
 
+/*
+We’ll learn about IEnumerable, Indexer, Enumerator, Operator Overloading, Custom Casting, Anonymous Types and more
+*/
+
+
 namespace ConsoleApp
 {
+    // Indexers allow you to access items like arrays
     public class Program
     {
         static void Main(string[] args)
         {
-            // ---------- SELECT ----------
-            // Select allows us to execute a function on each item in a list
-            // Generate a list from 1 to 10
-            var oneTo10 = new List<int>();
-            oneTo10.AddRange(Enumerable.Range(1, 10));
-            var squares = oneTo10.Select(x => x * x);
-            foreach (var l in squares) Console.WriteLine(l);
+            // Create an AnimalFarm object
+            AnimalFarm myAnimals = new AnimalFarm();
+
+            // Add Animals
+            myAnimals[0] = new Animal("Wilbur");
+            myAnimals[1] = new Animal("Templeton");
+            myAnimals[2] = new Animal("Gander");
+            myAnimals[3] = new Animal("Charlotte");
+            foreach (Animal i in myAnimals) Console.WriteLine(i.Name);
+
+            // Testing operator overloading
+            Box box1 = new Box(2, 3, 4);
+            Box box2 = new Box(5, 6, 7);
+            Box box3 = box1 + box2;
+
+            // Converts the box to a string with ToString
+            Console.WriteLine($"Box 3 : {box3}");
+            Console.WriteLine($"Box Int : {(int)box3}");
+            Box box4 = (Box)4;
 
 
-            // ---------- ZIP ----------
-            // Zip applies a function to two lists
-            // Add values in 2 lists together
-            var listOne = new List<int>(new int[] { 1, 3, 4 });
-            var listTwo = new List<int>(new int[] { 4, 6, 8 });
-            var sumList = listOne.Zip(listTwo, (x, y) => x + y).ToList();
-            foreach (var item in sumList) Console.WriteLine(item);
+            // Sometimes you want to build a simple class that contains fields and Anonymous types are great for that
+            var shopkins = new
+            {
+                Name = "Shopkins",
+                Price = 4.99
+            };
+            Console.WriteLine($"{shopkins.Name} cost {shopkins.Price}");
 
 
-            // ---------- AGGREGATE ----------
-            // Aggregate performs an operation on each item in a list and carries the results forward
-            // Sum values in a list
-            var numList1 = new List<int>() { 1, 2, 3, 4, 5 };
-            Console.WriteLine("Sum {0}", numList1.Aggregate((a, b) => a + b));
+            // Anonymous types can also be stored in an array
+            var toyArray = new[] {
+                new { Name= "Yo-Kai Pack", Price = 4.99 }, new { Name = "Legos", Price = 9.99 }
+                };
 
-
-            // ---------- AVERAGE ----------
-            // Get the average of a list of values
-            // AsQueryable allows you to manipulate the collection with the Average function
-            Console.WriteLine("Avg {0}", numList1.AsQueryable().Average());
-
-
-            // ---------- ALL ----------
-            // Determines if all items in a list meet a condition
-            Console.WriteLine("All > 3 {0}", numList1.All(x => x > 3));
-
-
-            // ---------- ANY ----------
-            // Determines if any items in a list meet a condition
-            Console.WriteLine("Any > 3 {0}", numList1.Any(x => x > 3));
-
-
-            // ---------- DISTINCT ----------
-            // Eliminates duplicates from a list
-            var numList5 = new List<int>() { 1, 2, 3, 2, 3 };
-            Console.WriteLine("Distinct : {0}", String.Join(", ", numList5.Distinct()));
-
-
-            // ---------- EXCEPT ----------
-            // Receives 2 lists and returns values not found in the 2nd list
-            var numList6 = new List<int>() { 3 };
-            Console.WriteLine("Except : {0}", String.Join(", ", numList5.Except(numList6)));
-
-
-            // ---------- INTERSECT ----------
-            // Receives 2 lists and returns values that
-            // both lists have
-            Console.WriteLine("Intersect : {0}", String.Join(", ", numList5.Intersect(numList6)));
+            // You can loop through the array
+            foreach (var item in toyArray)
+            {
+                Console.WriteLine($"{item.Name} cost {item.Price}");
+            }
         }
     }
 }
