@@ -6,130 +6,49 @@ using System.Collections.Generic;
 
 namespace ConsoleApp
 {
-
-    // We focus on Generic Collections, Generic Methods, Generic Structs, and more on Delegates
+    // This time I'll cover multiple functions you can use to work with lists of data including Lambda, Where, ToList, Select, Zip, Aggregate and Average
     public class Program
     {
+        // Delegate that is assigned a Lambda expression
+        delegate double doubleIt(double val);
 
         static void Main(string[] args)
         {
+            // Like we did with predicates earlier Lambda expressions allow you to use anonymous methods that define the input parameters on the left and the code to execute on the right
+            doubleIt dblIt = x => x * 2;
+            Console.WriteLine($"5 * 2 = {dblIt(5)}");
 
-            // Generic collections are type safe and provide performance benefits
+            // You don't have to use delegates though. Here we'll search through a list to find all the even numbers
+            List<int> numList = new List<int> { 1, 9, 2, 6, 3 };
 
-            // You define the data type when defining the generic. This is a dynamically resizing collection
-            List<Animal> animalList = new List<Animal>();
+            // Put the number in the list if the condition is true
+            var evenList = numList.Where(a => a % 2 == 0).ToList();
+            foreach (var j in evenList) Console.WriteLine(j);
 
-            // You can also create a list of standard types like int
-            List<int> numList = new List<int>();
+            // Add values in a range to a list
+            var rangeList = numList.Where(x => (x > 2) || (x < 9)).ToList();
+            foreach (var j in rangeList) Console.WriteLine(j);
 
-            // Add an int
-            numList.Add(24);
+            // Find the number of heads and tails in a list 1 = H, 2 = T
 
-            // Add Animals
-            animalList.Add(new Animal() { Name = "Doug", });
-            animalList.Add(new Animal() { Name = "Paul", });
-            animalList.Add(new Animal() { Name = "Sally", });
-
-            // Insert in index 1
-            animalList.Insert(1, new Animal() { Name = "Steve", });
-            // Remove index 1
-            animalList.RemoveAt(1);
-
-            // Get number of Animals
-            Console.WriteLine("Num of Animals : {0}", animalList.Count);
-
-            // Cycle through Animals
-            foreach (Animal a in animalList)
+            // Generate our list
+            List<int> flipList = new List<int>();
+            int i = 0;
+            Random rnd = new Random();
+            while (i < 100)
             {
-                Console.WriteLine(a.Name);
+                flipList.Add(rnd.Next(1, 3));
+                i++;
             }
 
-            // You can also use Stack<T>, Queue<T>, Dictionary<TKey, TValue> like I covered previously
+            // Print out the heads and tails
+            Console.WriteLine("Heads : {0}", flipList.Where(a => a == 1).ToList().Count());
+            Console.WriteLine("Tails : {0}", flipList.Where(a => a == 2).ToList().Count());
 
-            // Generic methods
-            // You can use the type parameter <int>  if it can be inferred from the parameters  passed (Can't do this if there are no parameters)
-            int x = 5, y = 4;
-            Animal.GetSum<int>(ref x, ref y);
-            string strX = "5", strY = "4";
-            Animal.GetSum<string>(ref strX, ref strY);
-
-            // Use the generic struct
-            Rectangle<int> rec1 = new Rectangle<int>(20, 50);
-            Console.WriteLine(rec1.GetArea());
-            Rectangle<string> rec2 = new Rectangle<string>("20", "50");
-            Console.WriteLine(rec2.GetArea());
-
-            // Delegates allow you to reference methods inside a delegate object. The delegate object can then be passed to other methods that can call the methods assigned to the delegate. It can also stack methods that are called in the specified order
-
-            // Create delegate objects
-            Arithmetic add, sub, addSub;
-
-
-            // Assign just the Add method
-            add = new Arithmetic(Add);
-
-            // Assign just the Subtract method
-            sub = new Arithmetic(Subtract);
-
-            // Assign Add and Sub
-            addSub = add + sub;
-
-            // Print out results
-            Console.WriteLine($"Add {6} & {10}");
-            add(6, 10);
-
-            // Call both methods
-            Console.WriteLine($"Add & Subtract {10} & {4}");
-            addSub(10, 4);
-        }
-
-
-        // You can also create generic structs and classes in this same way
-        public struct Rectangle<T>
-        {
-            // Generic fields
-            private T width;
-            private T length;
-
-            // Generic properties
-            public T Width
-            {
-                get { return width; }
-                set { width = value; }
-            }
-
-            public T Length
-            {
-                get { return length; }
-                set { length = value; }
-            }
-
-            // Generic constructor
-            public Rectangle(T w, T l)
-            {
-                width = w;
-                length = l;
-            }
-
-            public string GetArea()
-            {
-                double dblWidth = Convert.ToDouble(Width);
-                double dblLength = Convert.ToDouble(Length);
-                return string.Format($"{Width} * {Length} = {dblWidth} * {dblLength}");
-            }
-        }
-
-        // Declare a delegate type that performs arithmetic. It defines the return type and the types for attributes
-        public delegate void Arithmetic(double num1, double num2);
-
-        // Methods that will be assigned to the delegate
-        public static void Add(double num1, double num2)
-        {
-            Console.WriteLine($"{num1} + {num2} = {num1 + num2}");
-        }
-        public static void Subtract(double num1, double num2)
-        {
-            Console.WriteLine($"{num1} - {num2} = {num1 - num2}");
+            // Find all names starting with s
+            var nameList = new List<string> { "Doug", "Sally", "Sue" };
+            var sNameList = nameList.Where(x => x.StartsWith("S"));
+            foreach (var m in sNameList) Console.WriteLine(m);
         }
     }
 }
