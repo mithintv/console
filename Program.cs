@@ -11,51 +11,61 @@ We’ll learn about IEnumerable, Indexer, Enumerator, Operator Overloading, Cust
 
 namespace ConsoleApp
 {
-    // Indexers allow you to access items like arrays
+    // Language Integrated Query (LINQ) provides many tools for working with data. LINQ is similar to SQL, but it can work with data aside from databases. You manipulate data using Query Expressions
     public class Program
     {
+
+        static int[] QueryIntArray()
+        {
+            int[] nums = { 5, 10, 15, 20, 25, 30, 35 };
+
+            var gt20 = from num in nums
+                       where num > 20
+                       orderby num
+                       select num;
+
+            foreach (int num in gt20)
+            {
+                Console.WriteLine(num);
+            }
+            Console.WriteLine($"Get Type : {gt20.GetType()}");
+
+            var listGT20 = gt20.ToList<int>();
+            var arrayGT20 = gt20.ToArray();
+
+            nums[0] = 40;
+            foreach (int num in gt20)
+            {
+                Console.WriteLine(num);
+            }
+            return arrayGT20;
+        }
         static void Main(string[] args)
         {
-            // Create an AnimalFarm object
-            AnimalFarm myAnimals = new AnimalFarm();
+            string[] dogs = { "K9", "Brian Griffin", "Scooby Doo", "Old Yeller", "Rin Tin Tin", "Benji", "Charlie B. Barkin", "Lassie", "Snoopy" };
 
-            // Add Animals
-            myAnimals[0] = new Animal("Wilbur");
-            myAnimals[1] = new Animal("Templeton");
-            myAnimals[2] = new Animal("Gander");
-            myAnimals[3] = new Animal("Charlotte");
-            foreach (Animal i in myAnimals) Console.WriteLine(i.Name);
+            // Get strings with spaces and put in alphabetical order
+            // from states where data comes from and where to store each piece as you cycle
+            // where defines conditions that must be met
+            // orderby defines what data is used for ordering results (ascending / descending)
+            // select defines the variable that is checked against the condition
+            var dogSpaces = from dog in dogs
+                            where dog.Contains(" ")
+                            orderby dog descending
+                            select dog;
 
-            // Testing operator overloading
-            Box box1 = new Box(2, 3, 4);
-            Box box2 = new Box(5, 6, 7);
-            Box box3 = box1 + box2;
-
-            // Converts the box to a string with ToString
-            Console.WriteLine($"Box 3 : {box3}");
-            Console.WriteLine($"Box Int : {(int)box3}");
-            Box box4 = (Box)4;
-
-
-            // Sometimes you want to build a simple class that contains fields and Anonymous types are great for that
-            var shopkins = new
+            foreach (var i in dogSpaces)
             {
-                Name = "Shopkins",
-                Price = 4.99
-            };
-            Console.WriteLine($"{shopkins.Name} cost {shopkins.Price}");
-
-
-            // Anonymous types can also be stored in an array
-            var toyArray = new[] {
-                new { Name= "Yo-Kai Pack", Price = 4.99 }, new { Name = "Legos", Price = 9.99 }
-                };
-
-            // You can loop through the array
-            foreach (var item in toyArray)
-            {
-                Console.WriteLine($"{item.Name} cost {item.Price}");
+                Console.WriteLine(i);
             }
+
+
+            int[] intArray = QueryIntArray();
+            foreach (int num in intArray)
+            {
+                Console.WriteLine(num);
+            }
+
         }
     }
 }
