@@ -40,7 +40,7 @@ namespace ConsoleApp
             }
             return arrayGT20;
         }
-        static void Main(string[] args)
+        static void QueryStringArray()
         {
             string[] dogs = { "K9", "Brian Griffin", "Scooby Doo", "Old Yeller", "Rin Tin Tin", "Benji", "Charlie B. Barkin", "Lassie", "Snoopy" };
 
@@ -65,7 +65,9 @@ namespace ConsoleApp
             {
                 Console.WriteLine(num);
             }
-
+        }
+        static void QueryArrayList()
+        {
             ArrayList famAnimals = new ArrayList()
             {
                 new Animal {
@@ -82,6 +84,7 @@ namespace ConsoleApp
                     Weight = 90 }
             };
 
+            // You have to convert the ArrayList into an IEnumerable
             var famAnimalEnum = famAnimals.OfType<Animal>();
 
             var smAnimals = from animal in famAnimalEnum
@@ -92,7 +95,42 @@ namespace ConsoleApp
             {
                 Console.WriteLine($"{animal.Name} weighs {animal.Weight}lbs");
             }
+        }
+        static void QueryCollection()
+        {
+            ArrayList animalList = new ArrayList()
+            {
+                new Animal {
+                    Name = "German Shepard",
+                    Height = 25,
+                    Weight = 77 },
+                new Animal {
+                    Name = "Chihuahua",
+                    Height = 7,
+                    Weight = 4.4 },
+                new Animal {
+                    Name = "Saint Bernard",
+                    Height = 30,
+                    Weight = 200 }
+            };
+            var animalListEnum = animalList.OfType<Animal>();
+            var bigDogs = from dog in animalListEnum
+                          where (dog.Weight > 70) && (dog.Height > 25)
+                          orderby dog.Name
+                          select dog;
 
+            foreach (var animal in bigDogs)
+            {
+                Console.WriteLine($"{animal.Name} weight {animal.Weight}lbs");
+            }
+
+        }
+        static void Main(string[] args)
+        {
+            QueryIntArray();
+            QueryStringArray();
+            QueryArrayList();
+            QueryCollection();
         }
     }
 }
