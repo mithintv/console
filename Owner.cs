@@ -3,7 +3,7 @@ namespace ConsoleApp
     class Owner
     {
         public string Name { get; set; }
-        public string OwnerID { get; set; }
+        public int OwnerID { get; set; }
 
     }
 }
