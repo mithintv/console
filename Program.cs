@@ -11,43 +11,25 @@ namespace ConsoleApp
     // You can't guarantee when a thread executes. You also must lock resources until a thread is done with them or you could corrupt them
     public class Program
     {
+        // ----- Passing Data to Threads -----
+        // You can pass arguments to a thread using a lambda expression
 
-        // ----- Lock Example -----
-        // lock keeps other threads from entering a statement block until another thread leaves
+        static void CountTo(int maxNum, int threadNum)
+        {
+            for (int i = 0; i <= maxNum; i++)
+            {
+                Console.WriteLine($"{threadNum} :  {i}");
+            }
+        }
         static void Main(string[] args)
         {
-            BankAcct acct = new BankAcct(10);
-            Thread[] threads = new Thread[15];
+            Thread t = new Thread(() => CountTo(10, 0));
+            t.Start();
 
-            // CurrentThread gets you the current executing thread
-            Thread.CurrentThread.Name = "main";
-
-            // Create 15 threads that will call for IssueWithdraw to execute
-            for (int i = 0; i < 15; i++)
+            new Thread(() =>
             {
-                // You can only point at methods  without arguments and that return nothing
-                Thread t = new Thread(new ThreadStart(acct.IssueWithdraw));
-                t.Name = i.ToString();
-                threads[i] = t;
-            }
-
-            // Have threads try to execute
-            for (int i = 0; i < 15; i++)
-            {
-                // Check if thread has started
-                Console.WriteLine($"Thread {threads[i].Name} Alive : {threads[i].IsAlive}");
-
-                // Start thread
-                threads[i].Start();
-
-                // Check if thread has started
-                Console.WriteLine($"Thread {threads[i].Name} Alive : {threads[i].IsAlive}");
-            }
-
-            // Get thread priority (Normal Default) There's also Lowest, BelowNormal, AboveNormal nand Highest
-            // Changing priority doesn't guarantee the highest precedence though. It is best to not mess with this
-            Console.WriteLine($"Current Priority : {Thread.CurrentThread.Priority}");
-            Console.WriteLine($"Thread {Thread.CurrentThread.Name} Ending");
+                CountTo(5, 1);
+            }).Start();
         }
     }
 }
