@@ -1,44 +1,40 @@
-﻿using System.Text;
-
-namespace ConsoleApp
+﻿namespace ConsoleApp
 {
     public class Program
     {
         static void Main(string[] args)
         {
-            // ----- FILESTREAMS -----
-            // FileStream is used to read and write a byte or an array of bytes. 
+            // ----- STREAMWRITER / STREAMREADER -----
+            // These are best for reading and writing strings
 
-            string textFilePath = @"C:\Users\mithi\c#data\testfile2.txt";
+            string textFilePath = @"C:\Users\mithi\c#data\testfile3.txt";
 
-            // Create and open a file
-            FileStream fs = File.Open(textFilePath, FileMode.Create);
+            // Create a text file
+            StreamWriter sw = new StreamWriter(textFilePath);
 
-            string randString = "This is a random string";
+            // Write to a file without a newline
+            sw.Write("This is a random ");
 
-            // Convert to a byte array
-            byte[] rsByteArray = Encoding.Default.GetBytes(randString);
+            // Write to a file with a newline
+            sw.WriteLine("sentence");
 
-            // Write to file by defining the byte array, the index to start writing from, and length
-            fs.Write(rsByteArray, 0, rsByteArray.Length);
+            // Write another
+            sw.WriteLine("This is another sentence.");
 
-            // Move back to the beginning of the file
-            fs.Position = 0;
+            // Close the StreamWriter
+            sw.Close();
 
-            // Create byte array to hold file data
-            byte[] fileByteArray = new byte[rsByteArray.Length];
+            // Open the file for reading
+            StreamReader sr = new StreamReader(textFilePath);
 
-            // Put bytes in array
-            for (int i = 0; i < rsByteArray.Length; i++)
-            {
-                fileByteArray[i] = (byte)fs.ReadByte();
-            }
+            // Peek returns the next character as a unicode number. Use Convert to change to a character
+            Console.WriteLine($"Peek : {Convert.ToChar(sr.Peek())}");
 
-            // Convert from bytes to string and output
-            Console.WriteLine(Encoding.Default.GetString(fileByteArray));
+            // Read to a newline
+            Console.WriteLine($"1st String : {sr.ReadLine()}");
 
-            // Close the FileStream
-            fs.Close();
+            // Read to the end of the file starting where you left off reading
+            Console.WriteLine($"Everything Else : {sr.ReadToEnd()}");
         }
     }
 }
