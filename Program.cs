@@ -11,23 +11,19 @@ namespace ConsoleApp
     // You can't guarantee when a thread executes. You also must lock resources until a thread is done with them or you could corrupt them
     public class Program
     {
-        // ----- Simple Thread Example -----
-        static void Print1()
-        {
-            for (int i = 0; i < 1000; i++)
-            {
-                Console.Write(1);
-            }
-        }
+        // ----- Sleep Example -----
+
+        // With sleep() the thread is suspended for the designated amount of time
         static void Main(string[] args)
         {
-            Thread t = new Thread(Print1);
-            t.Start();
-
-            for (int i = 0; i < 1000; i++)
+            int num = 1;
+            for (int i = 0; i < 10; i++)
             {
-                Console.Write(0);
+                Console.Write(num);
+                Thread.Sleep(1000);
+                num++;
             }
+            Console.WriteLine("Thread Ends");
         }
     }
 }
