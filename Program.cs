@@ -4,37 +4,37 @@
     {
         static void Main(string[] args)
         {
-            // ----- STREAMWRITER / STREAMREADER -----
-            // These are best for reading and writing strings
+            // ----- BINARYWRITER / BINARYREADER -----
+            // Used to read and write data types 
+            string textFilePath = @"C:\Users\mithi\c#data\testfile4.txt";
 
-            string textFilePath = @"C:\Users\mithi\c#data\testfile3.txt";
+            // Create file and retrieve it
+            FileInfo datFile = new FileInfo(textFilePath);
 
-            // Create a text file
-            StreamWriter sw = new StreamWriter(textFilePath);
+            // Open the file
+            BinaryWriter bw = new BinaryWriter(datFile.OpenWrite());
 
-            // Write to a file without a newline
-            sw.Write("This is a random ");
+            // Data to save to the file
+            string randText = "Random Text";
+            int myAge = 47;
+            double height = 6.25;
 
-            // Write to a file with a newline
-            sw.WriteLine("sentence");
+            // Write data to a file
+            bw.Write(randText);
+            bw.Write(myAge);
+            bw.Write(height);
 
-            // Write another
-            sw.WriteLine("This is another sentence.");
+            bw.Close();
 
-            // Close the StreamWriter
-            sw.Close();
+            // Open file for reading
+            BinaryReader br = new BinaryReader(datFile.OpenRead());
 
-            // Open the file for reading
-            StreamReader sr = new StreamReader(textFilePath);
+            // Output data
+            Console.WriteLine(br.ReadString());
+            Console.WriteLine(br.ReadInt32());
+            Console.WriteLine(br.ReadDouble());
 
-            // Peek returns the next character as a unicode number. Use Convert to change to a character
-            Console.WriteLine($"Peek : {Convert.ToChar(sr.Peek())}");
-
-            // Read to a newline
-            Console.WriteLine($"1st String : {sr.ReadLine()}");
-
-            // Read to the end of the file starting where you left off reading
-            Console.WriteLine($"Everything Else : {sr.ReadToEnd()}");
+            br.Close();
         }
     }
 }
