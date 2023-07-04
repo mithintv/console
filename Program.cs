@@ -1,80 +1,44 @@
-﻿namespace ConsoleApp
+﻿using System.Text;
+
+namespace ConsoleApp
 {
     public class Program
     {
         static void Main(string[] args)
         {
-            // ----- MESSING WITH DIRECTORIES -----
+            // ----- FILESTREAMS -----
+            // FileStream is used to read and write a byte or an array of bytes. 
 
-            // Get access to the current directory
-            DirectoryInfo currDir = new DirectoryInfo(".");
+            string textFilePath = @"C:\Users\mithi\c#data\testfile2.txt";
 
-            // Get access to a directory with a path
-            DirectoryInfo customDir = new DirectoryInfo(@"C:/Users/mithi");
+            // Create and open a file
+            FileStream fs = File.Open(textFilePath, FileMode.Create);
 
-            // Get the directory path
-            Console.WriteLine(currDir.FullName);
-            Console.WriteLine(customDir.FullName);
+            string randString = "This is a random string";
 
-            // Get the directory name
-            Console.WriteLine(customDir.Name);
+            // Convert to a byte array
+            byte[] rsByteArray = Encoding.Default.GetBytes(randString);
 
-            // Get the parent directory
-            Console.WriteLine(customDir.Parent);
+            // Write to file by defining the byte array, the index to start writing from, and length
+            fs.Write(rsByteArray, 0, rsByteArray.Length);
 
-            // What type is it
-            Console.WriteLine(customDir.Attributes);
+            // Move back to the beginning of the file
+            fs.Position = 0;
 
-            // When was it created
-            Console.WriteLine(customDir.CreationTime);
+            // Create byte array to hold file data
+            byte[] fileByteArray = new byte[rsByteArray.Length];
 
-            // Create a directory
-            DirectoryInfo dataDirectory = new DirectoryInfo(@"C:/Users/mithi/c#data");
-            dataDirectory.Create();
-
-            // Delete a directory
-            //Directory.Delete(@"C:/Users/mithi/c#data\");
-
-
-            // ----- SIMPLE FILE READING & WRITING -----
-
-            // Write a string array to a text file
-            string[] customers =
+            // Put bytes in array
+            for (int i = 0; i < rsByteArray.Length; i++)
             {
-                "Bob Smith",
-                "Sally Smith",
-                "Robert Smith"
-            };
-            string textFilePath = @"C:\Users\mithi\c#data\textfile1.txt";
-
-            // Write the array
-            File.WriteAllLines(textFilePath, customers);
-
-            // Read strings from array
-            foreach (string customer in File.ReadAllLines(textFilePath))
-            {
-                Console.WriteLine($"Customer : {customer}");
+                fileByteArray[i] = (byte)fs.ReadByte();
             }
 
+            // Convert from bytes to string and output
+            Console.WriteLine(Encoding.Default.GetString(fileByteArray));
 
-            // ----- GETTING FILE DATA -----
-
-            DirectoryInfo myDataDir = new DirectoryInfo(@"C:/Users/mithi/c#data");
-
-            // Get all txt files 
-            FileInfo[] txtFiles = myDataDir.GetFiles("*.txt", SearchOption.AllDirectories);
-
-            // Number of matches
-            Console.WriteLine($"Matches : {txtFiles.Length}");
-
-            foreach (FileInfo file in txtFiles)
-            {
-                // Get file name
-                Console.WriteLine(file.Name);
-
-                // Get bytes in file
-                Console.WriteLine(file.Length);
-            }
+            // Close the FileStream
+            fs.Close();
         }
     }
 }
