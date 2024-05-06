@@ -3,10 +3,11 @@ package main
 import "fmt"
 
 func main() {
-	accountAge := 2.6
+	const premiumPlanName = "Premium Plan"
+	const basicPlanName = "Basic Plan"
 
-	// create a new "accountAgeInt" here
-	// it should be the result of casting "accountAge" to an integer
-	accountAgeInt := int(accountAge)
-	fmt.Println("Your account has existed for", accountAgeInt, "years")
+	// don't edit below this line
+
+	fmt.Println("plan:", premiumPlanName)
+	fmt.Println("plan:", basicPlanName)
 }
