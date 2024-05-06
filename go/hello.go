@@ -3,7 +3,10 @@ package main
 import "fmt"
 
 func main() {
-	// declare here
-	averageOpenRate, displayMessage := 0.23, "is the average open rate of your messages"
-	fmt.Println(averageOpenRate, displayMessage)
+	accountAge := 2.6
+
+	// create a new "accountAgeInt" here
+	// it should be the result of casting "accountAge" to an integer
+	accountAgeInt := int(accountAge)
+	fmt.Println("Your account has existed for", accountAgeInt, "years")
 }
