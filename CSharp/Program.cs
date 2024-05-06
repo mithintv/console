@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
 using System.Xml.Serialization;
 
-namespace ConsoleApp
+namespace CSharp
 {
     public class Program
     {

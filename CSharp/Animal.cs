@@ -3,7 +3,7 @@
 
 // With serialization you can store the state  of an object in a file stream, pass it to a remote network
 
-namespace ConsoleApp
+namespace CSharp
 {
     // Defines that you want to serialize this class
     [Serializable()]
