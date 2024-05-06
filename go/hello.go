@@ -3,10 +3,12 @@ package main
 import "fmt"
 
 func main() {
-	const secondsInMinute = 60
-	const minutesInHour = 60
-	const secondsInHour = secondsInMinute * minutesInHour
+	const name = "Saul Goodman"
+	const openRate = 30.5
+
+	msg := fmt.Sprintf("Hi %s, your open rate is %.1f percent", name, openRate)
 
 	// don't edit below this line
-	fmt.Println("number of seconds in an hour:", secondsInHour)
+
+	fmt.Println(msg)
 }
