@@ -3,8 +3,6 @@ package main
 import "fmt"
 
 func main() {
-	// declare here
-	congrats := "happy birthday!"
-
-	fmt.Println(congrats)
+	penniesPerText := 2.00
+	fmt.Printf("The type of penniesPerText is %T\n", penniesPerText)
 }

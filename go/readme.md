@@ -1,30 +1,24 @@
-# Short Variable Declaration
+# Type Inference
 
-Inside a function (even the main function), the `:=` short assignment statement can be used in place of a `var` declaration. The `:=` operator infers the type of the new variable based on the value.
+To declare a variable without specifying an explicit type (either by using the `:=` syntax or `var = expression` syntax), the variable's type is *inferred* from the value on the right hand side.
 
-```go
-var empty string
-```
-
-Is the same as
-
+When the right hand side of the declaration is typed, the new variable is of that same type:
 
 ```go
-empty := ""
+var i int
+j := i // j is also an int
 ```
+
+However, when the right hand side is a literal value (an untyped numeric constant like `42` or `3.14`), the new variable will be an `int`, `float64`, or `complex128` depending on its precision:
 
 ```go
-numCars := 10 // inferred to be an integer
-
-temperature := 0.0 // temperature is inferred to be a floating point value because it has a decimal point
-
-var isFunny = true // isFunny is inferred to be a boolean
+i := 42           // int
+f := 3.14         // float64
+g := 0.867 + 0.5i // complex128
 ```
-
-Outside of a function (in the [global/package scope](https://dave.cheney.net/2017/06/11/go-without-package-scoped-variables)), every statement begins with a keyword (`var`, `func`, and so on) and so the `:=` construct is not available.
 
 ## Assignment
 
-A lot of our users send birthday messages using the Textio API.
+Our current price to send a text message is 2 cents. However, it's likely that in the future the price will be a fraction of a penny, so we should use a `float64` to store this value.
 
-Declare a variable named `congrats` with the value "happy birthday!" using a short variable declaration.
+Edit the `penniesPerText` declaration so that it's inferred by the compiler to be a `float64`.
