@@ -1,13 +1,25 @@
-# Constants
+# Computed Constants
 
-Constants are declared like variables but use the `const` keyword. Constants can't use the `:=` short declaration syntax.
+Constants must be known at compile time. More often than not they will be declared with a static value:
 
-Constants can be character, string, boolean, or numeric values. They *can not* be more complex types like slices, maps and structs, which are types we will explain later.
+```go
+const myInt = 15
+```
 
-As the name implies, the value of a constant can't be changed after it has been declared.
+However, constants *can be computed* so long as the computation can happen at *compile time*.
 
-## Use two separate constants
+For example, this is valid:
 
-Something weird is happening in this code.
+```go
+const firstName = "Lane"
+const lastName = "Wagner"
+const fullName = firstName + " " + lastName
+```
 
-What *should* be happening is that we create 2 separate constants: `premiumPlanName` and `basicPlanName`. Right now it looks like we're trying to overwrite one of them.
+That said, you *cannot* declare a constant that can only be computed at run-time.
+
+## Assignment
+
+Keeping track of time in a message-sending application is *critical*. Imagine getting an appointment reminder an hour **after** your doctor's visit.
+
+Complete the code using a computed constant to print the number of seconds in an hour.
