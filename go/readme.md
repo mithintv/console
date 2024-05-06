@@ -1,57 +1,36 @@
-# Formatting Strings in Go
+# Conditionals
 
-Go follows the [printf tradition](https://cplusplus.com/reference/cstdio/printf/) from the C language. In my opinion, string formatting/interpolation in Go is currently *less* elegant than JavaScript and Python.
-
-* [fmt.Printf](https://pkg.go.dev/fmt#Printf) - Prints a formatted string to [standard out](https://stackoverflow.com/questions/3385201/confused-about-stdin-stdout-and-stderr).
-* [fmt.Sprintf()](https://pkg.go.dev/fmt#Sprintf) - Returns the formatted string
-
-## Examples
-
-### %v - Interpolate the default representation
-
-The `%v` variant prints the Go syntax representation of a value. You can usually use this if you're unsure what else to use. That said, it's better to use the type-specific variant if you can.
+`if` statements in Go don't use parentheses around the condition:
 
 ```go
-fmt.Printf("I am %v years old", 10)
-// I am 10 years old
-
-fmt.Printf("I am %v years old", "way too many")
-// I am way too many years old
+if height > 4 {
+    fmt.Println("You are tall enough!")
+}
 ```
 
-### `%s` - Interpolate a string
+`else if` and `else` are supported as you would expect:
 
 ```go
-fmt.Printf("I am %s years old", "way too many")
-// I am way too many years old
+if height > 6 {
+    fmt.Println("You are super tall!")
+} else if height > 4 {
+    fmt.Println("You are tall enough!")
+} else {
+    fmt.Println("You are not tall enough!")
+}
 ```
-
-### `%d` - Interpolate an integer in decimal form
-
-```go
-fmt.Printf("I am %d years old", 10)
-// I am 10 years old
-```
-
-### `%f` - Interpolate a decimal
-
-```go
-fmt.Printf("I am %f years old", 10.523)
-// I am 10.523000 years old
-
-// The ".2" rounds the number to 2 decimal places
-fmt.Printf("I am %.2f years old", 10.523)
-// I am 10.52 years old
-```
-
-If you're interested in all the formatting options, feel free to take a look at the `fmt` package's [docs here](https://pkg.go.dev/fmt#hdr-Printing).
 
 ## Assignment
 
-Create a new variable called `msg` on line 9. It's a string that contains the following:
+Fix the bug on line `12`. The `if` statement should print "Message sent" if the `messageLen` is *less than or equal to* the `maxMessageLen`, or "Message not sent" otherwise.
 
-```
-Hi NAME, your open rate is OPENRATE percent
-```
+### Tips
 
-Where `NAME` is the given `name`, and `OPENRATE` is the `openRate` rounded to the nearest "tenths" place.
+Here are some of the comparison operators in Go:
+
+* `==` equal to
+* `!=` not equal to
+* `<` less than
+* `>` greater than
+* `<=` less than or equal to
+* `>=` greater than or equal to
